@@ -1,5 +1,5 @@
 services:
-    app:
+    trmnl-app:
         build:
             context: .
             dockerfile: Dockerfile
@@ -9,12 +9,30 @@ services:
             #- APP_KEY=
             - PHP_OPCACHE_ENABLE=1
             - TRMNL_PROXY_REFRESH_MINUTES=15
-            - DB_DATABASE=database/storage/database.sqlite
+            - DB_DATABASE=trmnl
+            - APP_TIMEZONE=${APP_TIMEZONE:-Australia/Sydney}
+            - DB_CONNECTION=${DB_CONNECTION:-mariadb}
+            - DB_HOST=${DB_HOST:-mariadb}
+            - DB_PORT=${DB_PORT:-3306}
+            - DB_USERNAME=${DB_USERNAME:-root}
+            - DB_PASSWORD=${DB_PASSWORD:-root}
+            - APP_URL=${APP_URL:-http://localhost:4567}
+            - APP_ENV=${APP_ENV:-local}
+            - APP_DEBUG=${APP_DEBUG:-true}
+            - APP_NAME=${APP_NAME:-Trmnl}
+            - APP_LOCALE=${APP_LOCALE:-en}
         volumes:
            - database:/var/www/html/database/storage
            - storage:/var/www/html/storage/app/public/images/generated
         restart: unless-stopped
+        networks:
+            - caddy
         #platform: "linux/arm64/v8"
+
+networks:
+    caddy:
+        external: true
+
 volumes:
     database:
     storage:
