@@ -5,12 +5,16 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {
-    Volt::route('login', 'auth.login')
-        ->name('login');
+    // Redirect to Users.au OAuth login
+    Route::get('login', function () {
+        return redirect()->route('usersau.login');
+    })->name('login');
 
+    // Redirect to Users.au OAuth registration
     if (config('app.registration.enabled')) {
-        Volt::route('register', 'auth.register')
-            ->name('register');
+        Route::get('register', function () {
+            return redirect()->route('usersau.register');
+        })->name('register');
     }
 
     Volt::route('forgot-password', 'auth.forgot-password')
@@ -33,5 +37,7 @@ Route::middleware('auth')->group(function () {
         ->name('password.confirm');
 });
 
-Route::post('logout', App\Livewire\Actions\Logout::class)
-    ->name('logout');
+// Redirect to Users.au OAuth logout
+Route::match(['get', 'post'], 'logout', function () {
+    return redirect()->route('usersau.logout');
+})->name('logout');

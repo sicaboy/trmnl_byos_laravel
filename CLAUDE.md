@@ -111,6 +111,19 @@ Key environment variables for development:
 - `REGISTRATION_ENABLED=1` (allow user registration)
 - `TRMNL_PROXY_BASE_URL=https://trmnl.app` (for cloud proxy)
 
+### Users.au OAuth Configuration
+- `USERSAU_CLIENT_ID` - OAuth client ID from Users.au
+- `USERSAU_CLIENT_SECRET` - OAuth client secret from Users.au
+- `USERSAU_REDIRECT_URI` - OAuth callback URL (default: `${APP_URL}/auth/usersau/callback`)
+- `USERSAU_HOST` - Users.au instance URL
+
+## Authentication
+
+**Users.au OAuth Integration**: The application uses Users.au for single sign-on authentication:
+- Login/register routes redirect to Users.au OAuth (`/auth/usersau/login`, `/auth/usersau/register`)
+- Original Volt auth components remain but are bypassed by route redirects
+- User model includes Users.au OAuth fields: `usersau_id`, `usersau_access_token`, `usersau_refresh_token`
+
 ## Special Notes
 
 - Screen images are generated as PNG by default, BMP for older firmware versions

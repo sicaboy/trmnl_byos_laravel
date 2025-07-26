@@ -8,6 +8,11 @@ services:
             - PHP_OPCACHE_ENABLE=1
             - TRMNL_PROXY_REFRESH_MINUTES=15
             - DB_DATABASE=database/storage/database.sqlite
+            # Users.au OAuth Configuration
+            #- USERSAU_CLIENT_ID=
+            #- USERSAU_CLIENT_SECRET=
+            #- USERSAU_REDIRECT_URI=
+            #- USERSAU_HOST=
         volumes:
             - database:/var/www/html/database/storage
             - storage:/var/www/html/storage/app/public/images/generated

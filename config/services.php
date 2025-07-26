@@ -50,4 +50,11 @@ return [
         ],
     ],
 
+    'usersau' => [
+        'client_id' => env('USERSAU_CLIENT_ID'),
+        'client_secret' => env('USERSAU_CLIENT_SECRET'),
+        'redirect' => env('USERSAU_REDIRECT_URI'),
+        'host' => env('USERSAU_HOST'),
+    ],
+
 ];

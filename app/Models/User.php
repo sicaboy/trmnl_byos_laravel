@@ -26,6 +26,9 @@ class User extends Authenticatable // implements MustVerifyEmail
         'password',
         'assign_new_devices',
         'assign_new_device_id',
+        'usersau_id',
+        'usersau_access_token',
+        'usersau_refresh_token',
     ];
 
     /**
@@ -36,6 +39,9 @@ class User extends Authenticatable // implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'usersau_id',
+        'usersau_access_token',
+        'usersau_refresh_token',
     ];
 
     /**
