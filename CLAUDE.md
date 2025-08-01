@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-TRMNL BYOS Laravel is a self-hostable implementation of a TRMNL server built with Laravel. It manages e-ink display devices, generates screens dynamically, and can proxy the native TRMNL cloud service.
+Smart Display is a self-hostable implementation of a TRMNL server built with Laravel. It manages e-ink display devices, generates screens dynamically, and can proxy the native TRMNL cloud service.
 
 ## Development Commands
 

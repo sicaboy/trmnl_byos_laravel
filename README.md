@@ -1,8 +1,8 @@
-## TRMNL BYOS (PHP/Laravel)
+## Smart Display (PHP/Laravel)
 
 [![tests](https://github.com/usetrmnl/byos_laravel/actions/workflows/test.yml/badge.svg)](https://github.com/usetrmnl/byos_laravel/actions/workflows/test.yml)
 
-TRMNL BYOS Laravel is a self-hostable implementation of a TRMNL server, built with Laravel.
+Smart Display is a self-hostable implementation of a TRMNL server, built with Laravel.
 It enables you to manage TRMNL devices, generate screens dynamically, and can act as a proxy for the native cloud service (native plugins, recipes).
 
 If you are looking for a Laravel package designed to streamline the development of both public and private TRMNL plugins, check out [bnussbau/trmnl-laravel](https://github.com/bnussbau/laravel-trmnl).
@@ -66,7 +66,7 @@ If you’re using a VPS (e.g., Hetzner) and prefer an alternative to native Dock
 It’s a quick way to get started without having to manually manage Docker setup.
 
 ### PikaPods
-You can vote for TRMNL BYOS Laravel to be included as PikaPods Template here: [feedback.pikapods.com](https://feedback.pikapods.com/posts/842/add-app-trmnl-byos-laravel)
+You can vote for Smart Display to be included as PikaPods Template here: [feedback.pikapods.com](https://feedback.pikapods.com/posts/842/add-app-trmnl-byos-laravel)
 
 #### Other Hosting Options
 Laravel Forge, or bare metal PHP server with Nginx or Apache is also supported.

@@ -71,8 +71,8 @@ new class extends Component {
     <x-trmnl::view>
         <x-trmnl::layout>
             <x-trmnl::markdown gapSize="large">
-                <x-trmnl::title>TRMNL BYOS Laravel</x-trmnl::title>
-                <x-trmnl::content>“This screen was rendered by BYOS Laravel”</x-trmnl::content>
+                <x-trmnl::title>Smart Display</x-trmnl::title>
+                <x-trmnl::content>"This screen was rendered by Smart Display"</x-trmnl::content>
                 <x-trmnl::label variant="underline">Benjamin Nussbaum</x-trmnl::label>
             </x-trmnl::markdown>
         </x-trmnl::layout>

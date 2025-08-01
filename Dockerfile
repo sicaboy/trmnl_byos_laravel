@@ -4,7 +4,7 @@
 FROM bnussbau/serversideup-php:8.3-fpm-nginx-alpine-imagick-chromium AS base
 
 LABEL org.opencontainers.image.source=https://github.com/usetrmnl/byos_laravel
-LABEL org.opencontainers.image.description="TRMNL BYOS Laravel"
+LABEL org.opencontainers.image.description="Smart Display"
 LABEL org.opencontainers.image.licenses=MIT
 
 ARG APP_VERSION
