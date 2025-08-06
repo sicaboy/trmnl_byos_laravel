@@ -159,16 +159,16 @@
         },
         {
             "name": "bnussbau/laravel-trmnl-blade",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bnussbau/laravel-trmnl-blade.git",
-                "reference": "a27dbce9203223591b3bbad46188ca3bf6c0af02"
+                "reference": "be3ee30b86940eae32c3188f5a158b9334ceaf34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bnussbau/laravel-trmnl-blade/zipball/a27dbce9203223591b3bbad46188ca3bf6c0af02",
-                "reference": "a27dbce9203223591b3bbad46188ca3bf6c0af02",
+                "url": "https://api.github.com/repos/bnussbau/laravel-trmnl-blade/zipball/be3ee30b86940eae32c3188f5a158b9334ceaf34",
+                "reference": "be3ee30b86940eae32c3188f5a158b9334ceaf34",
                 "shasum": ""
             },
             "require": {
@@ -223,7 +223,7 @@
             ],
             "support": {
                 "issues": "https://github.com/bnussbau/laravel-trmnl-blade/issues",
-                "source": "https://github.com/bnussbau/laravel-trmnl-blade/tree/1.1.1"
+                "source": "https://github.com/bnussbau/laravel-trmnl-blade/tree/1.2.0"
             },
             "funding": [
                 {
@@ -239,7 +239,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-14T18:37:41+00:00"
+            "time": "2025-07-28T19:31:11+00:00"
         },
         {
             "name": "brick/math",
