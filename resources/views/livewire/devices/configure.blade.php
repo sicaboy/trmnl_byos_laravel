@@ -1,7 +1,7 @@
 <?php
 
-use App\Jobs\FirmwareDownloadJob;
-use App\Models\Firmware;
+//use App\Jobs\FirmwareDownloadJob;
+//use App\Models\Firmware;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
 use Livewire\Volt\Component;
@@ -252,7 +252,8 @@ new class extends Component {
 
     public function updateFirmware()
     {
-        abort_unless(auth()->user()->devices->contains($this->device), 403);
+        return;
+        /*abort_unless(auth()->user()->devices->contains($this->device), 403);
 
         $this->validate([
             'selected_firmware_id' => 'required|exists:firmware,id',
@@ -267,7 +268,7 @@ new class extends Component {
             'update_firmware_id' => $this->selected_firmware_id,
         ]);
 
-        Flux::modal('update-firmware')->close();
+        Flux::modal('update-firmware')->close();*/
     }
 }
 ?>

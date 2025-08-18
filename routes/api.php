@@ -200,7 +200,7 @@ Route::get('/setup', function (Request $request) {
         'status' => 200,
         'api_key' => $device->api_key,
         'friendly_id' => $device->friendly_id,
-        'image_url' => url('storage/images/setup-logo.png'),
+        'image_url' => url('storage/images/setup-logo.bmp'),
         'message' => 'Welcome to TRMNL BYOS',
     ]);
 });
