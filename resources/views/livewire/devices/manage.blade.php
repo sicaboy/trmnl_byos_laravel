@@ -66,17 +66,6 @@ new class extends Component {
         session()->flash('message', 'Device created successfully.');
     }
 
-    public function toggleProxyCloud(Device $device): void
-    {
-        abort_unless(auth()->user()->devices->contains($device), 403);
-        $device->update([
-            'proxy_cloud' => !$device->proxy_cloud,
-        ]);
-
-        // if ($device->proxy_cloud) {
-        //     \App\Jobs\FetchProxyCloudResponses::dispatch();
-        // }
-    }
 
     public function pauseDevice($deviceId): void
     {
@@ -249,14 +238,6 @@ new class extends Component {
                                 @endif
                                 </flux:button.group>
 
-                                <flux:tooltip
-                                    content="Proxies images from the TRMNL Cloud service when no image is set (available in TRMNL DEV Edition only)."
-                                    position="bottom">
-                                    <flux:switch wire:click="toggleProxyCloud({{ $device->id }})"
-                                                 :checked="$device->proxy_cloud"
-                                                 :disabled="$device->mirror_device_id !== null"
-                                                 label="☁️ Proxy"/>
-                                </flux:tooltip>
                             </div>
                         </td>
                     </tr>

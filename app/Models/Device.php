@@ -18,9 +18,7 @@ class Device extends Model
 
     protected $casts = [
         'battery_notification_sent' => 'boolean',
-        'proxy_cloud' => 'boolean',
         'last_log_request' => 'json',
-        'proxy_cloud_response' => 'json',
         'width' => 'integer',
         'height' => 'integer',
         'rotate' => 'integer',
@@ -103,10 +101,6 @@ class Device extends Model
             return true;
         }
 
-        if ($this->proxy_cloud_response && $this->proxy_cloud_response['update_firmware']) {
-            return true;
-        }
-
         return false;
     }
 
@@ -123,19 +117,11 @@ class Device extends Model
             }
         }
 
-        if ($this->proxy_cloud_response && $this->proxy_cloud_response['firmware_url']) {
-            return $this->proxy_cloud_response['firmware_url'];
-        }
-
         return null;
     }
 
     public function resetUpdateFirmwareFlag(): void
     {
-        if ($this->proxy_cloud_response) {
-            $this->proxy_cloud_response = array_merge($this->proxy_cloud_response, ['update_firmware' => false]);
-            $this->save();
-        }
         if ($this->update_firmware_id) {
             $this->update_firmware_id = null;
             $this->save();

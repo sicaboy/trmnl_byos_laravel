@@ -8,7 +8,6 @@ services:
         environment:
             #- APP_KEY=
             - PHP_OPCACHE_ENABLE=1
-            - TRMNL_PROXY_REFRESH_MINUTES=15
             - DB_DATABASE=trmnl
             - APP_TIMEZONE=${APP_TIMEZONE:-Australia/Sydney}
             - DB_CONNECTION=${DB_CONNECTION:-mariadb}

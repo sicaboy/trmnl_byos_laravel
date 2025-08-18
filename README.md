@@ -103,8 +103,6 @@ php artisan db:seed --class=ExampleRecipesSeeder
 
 | Environment Variable          | Description                                                                                                                                 | Default           |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
-| `TRMNL_PROXY_BASE_URL`        | Base URL of the native TRMNL service                                                                                                        | https://trmnl.app |
-| `TRMNL_PROXY_REFRESH_MINUTES` | How often should the server fetch new images from native service                                                                            | 15                |
 | `REGISTRATION_ENABLED`        | Allow user registration via Webinterface                                                                                                    | 1                 |
 | `SSL_MODE`                    | SSL Mode, if not using a Reverse Proxy ([docs](https://serversideup.net/open-source/docker-php/docs/customizing-the-image/configuring-ssl)) | `off`             |
 | `FORCE_HTTPS`                 | If your server handles SSL termination, enforce HTTPS.                                                                                      | 0                 |

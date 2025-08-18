@@ -52,16 +52,6 @@ test('wifi strength is determined correctly', function () {
     }
 });
 
-test('proxy cloud attribute is properly cast to boolean', function () {
-    $device = Device::factory()->create([
-        'proxy_cloud' => true,
-    ]);
-
-    expect($device->proxy_cloud)->toBeTrue();
-
-    $device->update(['proxy_cloud' => false]);
-    expect($device->proxy_cloud)->toBeFalse();
-});
 
 test('last log request is properly cast to json', function () {
     $logData = ['status' => 'success', 'timestamp' => '2024-03-04 12:00:00'];

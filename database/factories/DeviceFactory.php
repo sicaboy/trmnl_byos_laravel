@@ -23,7 +23,6 @@ class DeviceFactory extends Factory
             'last_battery_voltage' => $this->faker->randomFloat(2, 3.0, 4.2),
             'last_rssi_level' => $this->faker->numberBetween(-100, 0),
             'last_firmware_version' => '1.6.0',
-            'proxy_cloud' => $this->faker->boolean(),
             'last_log_request' => ['status' => 'success', 'timestamp' => Carbon::now()->toDateTimeString()],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

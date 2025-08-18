@@ -96,8 +96,7 @@ Route::get('/display', function (Request $request) {
         // Get current screen image from a mirror device or continue if not available
         if (! $image_uuid = $device->mirrorDevice?->current_screen_image) {
             $refreshTimeOverride = null;
-            // Skip if cloud proxy is enabled for the device
-            if (! $device->proxy_cloud || $device->getNextPlaylistItem()) {
+            if ($device->getNextPlaylistItem()) {
                 $playlistItem = $device->getNextPlaylistItem();
 
                 if ($playlistItem && ! $playlistItem->isMashup()) {

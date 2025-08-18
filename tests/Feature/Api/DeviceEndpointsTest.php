@@ -271,50 +271,6 @@ test('log endpoint requires valid device credentials', function () {
         ->assertJson(['message' => 'Device not found or invalid access token']);
 });
 
-test('update_firmware flag is only returned once', function () {
-    $device = Device::factory()->create([
-        'mac_address' => '00:11:22:33:44:55',
-        'api_key' => 'test-api-key',
-        'proxy_cloud_response' => [
-            'update_firmware' => true,
-            'firmware_url' => 'https://example.com/firmware.bin',
-        ],
-    ]);
-
-    // First request should return update_firmware as true
-    $response = $this->withHeaders([
-        'id' => $device->mac_address,
-        'access-token' => $device->api_key,
-        'rssi' => -70,
-        'battery_voltage' => 3.8,
-        'fw-version' => '1.0.0',
-    ])->get('/api/display');
-
-    $response->assertOk()
-        ->assertJson([
-            'update_firmware' => true,
-            'firmware_url' => 'https://example.com/firmware.bin',
-        ]);
-
-    // Second request should return update_firmware as false
-    $response = $this->withHeaders([
-        'id' => $device->mac_address,
-        'access-token' => $device->api_key,
-        'rssi' => -70,
-        'battery_voltage' => 3.8,
-        'fw-version' => '1.0.0',
-    ])->get('/api/display');
-
-    $response->assertOk()
-        ->assertJson([
-            'update_firmware' => false,
-            'firmware_url' => 'https://example.com/firmware.bin',
-        ]);
-
-    // Verify the proxy_cloud_response was updated
-    $device->refresh();
-    expect($device->proxy_cloud_response['update_firmware'])->toBeFalse();
-});
 
 test('authenticated user can fetch device status', function () {
     $user = User::factory()->create();
@@ -503,7 +459,6 @@ test('plugin caches image until data is stale', function () {
     $device = Device::factory()->create([
         'mac_address' => '55:11:22:33:44:55',
         'api_key' => 'source-api-key',
-        'proxy_cloud' => false,
     ]);
 
     $plugin = Plugin::factory()->create([
@@ -578,7 +533,6 @@ test('plugins in playlist are rendered in order', function () {
     $device = Device::factory()->create([
         'mac_address' => '55:11:22:33:44:55',
         'api_key' => 'source-api-key',
-        'proxy_cloud' => true,
     ]);
 
     // Create two plugins
@@ -732,7 +686,6 @@ test('display endpoint handles mashup playlist items correctly', function () {
     $device = Device::factory()->create([
         'mac_address' => '00:11:22:33:44:55',
         'api_key' => 'test-api-key',
-        'proxy_cloud' => false,
     ]);
 
     // Create a playlist

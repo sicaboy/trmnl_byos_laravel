@@ -62,8 +62,6 @@ Smart Display is a self-hostable implementation of a TRMNL server built with Lar
 ### Device Auto-Discovery
 Users can enable "assign_new_devices" to automatically register devices that connect to the server.
 
-### Cloud Proxy Mode
-Devices can proxy content from the native TRMNL service while allowing local overrides for custom content.
 
 ### Screen Generation Pipeline
 1. Plugin renders markup (Blade/Liquid templates)
@@ -109,7 +107,6 @@ Key environment variables for development:
 - `DB_CONNECTION=sqlite` (uses `database/database.sqlite`)
 - `QUEUE_CONNECTION=sync` (or `database` for background processing)
 - `REGISTRATION_ENABLED=1` (allow user registration)
-- `TRMNL_PROXY_BASE_URL=https://trmnl.app` (for cloud proxy)
 
 ### Users.au OAuth Configuration
 - `USERSAU_CLIENT_ID` - OAuth client ID from Users.au

@@ -36,9 +36,6 @@ return [
     ],
 
     'trmnl' => [
-        'proxy_base_url' => env('TRMNL_PROXY_BASE_URL', 'https://trmnl.app'),
-        'proxy_refresh_minutes' => env('TRMNL_PROXY_REFRESH_MINUTES', 15),
-        'proxy_refresh_cron' => env('TRMNL_PROXY_REFRESH_CRON'),
         'override_orig_icon' => env('TRMNL_OVERRIDE_ORIG_ICON', false),
         'image_url_timeout' => env('TRMNL_IMAGE_URL_TIMEOUT', 30), // 30 seconds; increase on low-powered devices
     ],

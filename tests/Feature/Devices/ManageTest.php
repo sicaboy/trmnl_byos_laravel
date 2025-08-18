@@ -67,40 +67,4 @@ test('device creation requires required fields', function () {
     ]);
 });
 
-test('user can toggle proxy cloud for their device', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $device = Device::factory()->create([
-        'user_id' => $user->id,
-        'proxy_cloud' => false,
-    ]);
 
-    $response = Volt::test('devices.manage')
-        ->call('toggleProxyCloud', $device);
-
-    $response->assertHasNoErrors();
-    expect($device->fresh()->proxy_cloud)->toBeTrue();
-
-    // Toggle back to false
-    $response = Volt::test('devices.manage')
-        ->call('toggleProxyCloud', $device);
-
-    expect($device->fresh()->proxy_cloud)->toBeFalse();
-});
-
-test('user cannot toggle proxy cloud for other users devices', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-
-    $otherUser = User::factory()->create();
-    $device = Device::factory()->create([
-        'user_id' => $otherUser->id,
-        'proxy_cloud' => false,
-    ]);
-
-    $response = Volt::test('devices.manage')
-        ->call('toggleProxyCloud', $device);
-
-    $response->assertStatus(403);
-    expect($device->fresh()->proxy_cloud)->toBeFalse();
-});
