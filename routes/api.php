@@ -145,8 +145,8 @@ Route::get('/display', function (Request $request) {
         'filename' => $filename,
         'refresh_rate' => $refreshTimeOverride ?? $device->default_refresh_interval,
         'reset_firmware' => false,
-        'update_firmware' => $device->update_firmware,
-        'firmware_url' => $device->firmware_url,
+        'update_firmware' => false,// $device->update_firmware,
+        'firmware_url' => '', //$device->firmware_url,
         'special_function' => $device->special_function ?? 'sleep',
     ];
 

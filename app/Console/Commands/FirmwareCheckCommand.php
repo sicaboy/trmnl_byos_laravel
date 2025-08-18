@@ -17,7 +17,8 @@ class FirmwareCheckCommand extends Command
 
     public function handle(): void
     {
-        spin(
+        return;
+        /*spin(
             callback: fn () => FirmwarePollJob::dispatchSync(download: $this->option('download')),
             message: 'Checking for latest firmware...'
         );
@@ -33,6 +34,6 @@ class FirmwareCheckCommand extends Command
             );
         } else {
             $this->error('No firmware found.');
-        }
+        }*/
     }
 }
