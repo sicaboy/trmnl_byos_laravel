@@ -14,6 +14,33 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 Route::get('/display', function (Request $request) {
+    // Log request headers and payload
+    if (config('app.debug')) {
+        $logData = [
+            'method' => $request->method(),
+            'url' => $request->fullUrl(),
+            'headers' => $request->headers->all(),
+            'payload' => $request->all(),
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ];
+        
+        // Filter sensitive headers
+        $sensitiveHeaders = ['authorization', 'cookie', 'x-api-key', 'x-auth-token'];
+        foreach ($sensitiveHeaders as $header) {
+            if (isset($logData['headers'][$header])) {
+                $logData['headers'][$header] = ['[FILTERED]'];
+            }
+        }
+        
+        // Log to container stdout
+        error_log("=== API REQUEST /display ===");
+        error_log(json_encode($logData, JSON_PRETTY_PRINT));
+        error_log("=== END REQUEST ===");
+        
+        Log::info('API Request /display', $logData);
+    }
+    
     $mac_address = $request->header('id');
     $access_token = $request->header('access-token');
     $device = Device::where('mac_address', $mac_address)

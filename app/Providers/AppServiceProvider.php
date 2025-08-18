@@ -20,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Force HTTPS if in production or if CloudFlare headers are present
+        if (app()->isProduction() || request()->hasHeader('CF-Connecting-IP')) {
+            URL::forceScheme('https');
+        }
+        
         if (app()->isProduction() && config('app.force_https')) {
             URL::forceScheme('https');
         }
