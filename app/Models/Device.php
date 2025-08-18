@@ -95,38 +95,8 @@ class Device extends Model
 
     }
 
-    public function getUpdateFirmwareAttribute(): bool
-    {
-        if ($this->update_firmware_id) {
-            return true;
-        }
 
-        return false;
-    }
 
-    public function getFirmwareUrlAttribute(): ?string
-    {
-        if ($this->update_firmware_id) {
-            $firmware = Firmware::find($this->update_firmware_id);
-            if ($firmware) {
-                if ($firmware->storage_location) {
-                    return Storage::disk('public')->url($firmware->storage_location);
-                }
-
-                return $firmware->url;
-            }
-        }
-
-        return null;
-    }
-
-    public function resetUpdateFirmwareFlag(): void
-    {
-        if ($this->update_firmware_id) {
-            $this->update_firmware_id = null;
-            $this->save();
-        }
-    }
 
     public function playlists(): HasMany
     {
@@ -164,10 +134,6 @@ class Device extends Model
         return $this->belongsTo(self::class, 'mirror_device_id');
     }
 
-    public function updateFirmware(): BelongsTo
-    {
-        return $this->belongsTo(Firmware::class, 'update_firmware_id');
-    }
 
     public function logs(): HasMany
     {

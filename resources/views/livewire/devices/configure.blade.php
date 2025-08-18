@@ -34,10 +34,6 @@ new class extends Component {
     public $active_until;
     public $refresh_time = null;
 
-    // Firmware properties
-    public $firmwares;
-    public $selected_firmware_id;
-    public $download_firmware;
 
     public function mount(\App\Models\Device $device)
     {
@@ -57,8 +53,6 @@ new class extends Component {
         $this->rotate = $device->rotate;
         $this->image_format = $device->image_format;
         $this->playlists = $device->playlists()->with('items.plugin')->orderBy('created_at')->get();
-        $this->firmwares = \App\Models\Firmware::orderBy('latest', 'desc')->orderBy('created_at', 'desc')->get();
-        $this->selected_firmware_id = $this->firmwares->where('latest', true)->first()?->id;
         $this->sleep_mode_enabled = $device->sleep_mode_enabled ?? false;
         $this->sleep_mode_from = optional($device->sleep_mode_from)->format('H:i');
         $this->sleep_mode_to = optional($device->sleep_mode_to)->format('H:i');
@@ -250,26 +244,6 @@ new class extends Component {
         $this->refresh_time = $playlist->refresh_time;
     }
 
-    public function updateFirmware()
-    {
-        return;
-        /*abort_unless(auth()->user()->devices->contains($this->device), 403);
-
-        $this->validate([
-            'selected_firmware_id' => 'required|exists:firmware,id',
-        ]);
-
-
-        if ($this->download_firmware) {
-            FirmwareDownloadJob::dispatchSync(Firmware::find($this->selected_firmware_id));
-        }
-
-        $this->device->update([
-            'update_firmware_id' => $this->selected_firmware_id,
-        ]);
-
-        Flux::modal('update-firmware')->close();*/
-    }
 }
 ?>
 
@@ -331,9 +305,6 @@ new class extends Component {
                         <flux:dropdown>
                             <flux:button icon="ellipsis-horizontal" variant="subtle"></flux:button>
                             <flux:menu>
-                                <flux:modal.trigger name="update-firmware">
-                                    <flux:menu.item icon="arrow-up-circle">Update Firmware</flux:menu.item>
-                                </flux:modal.trigger>
                                 <flux:menu.item icon="bars-3" href="{{ route('devices.logs', $device) }}" wire:navigate>Show Logs</flux:menu.item>
                                 <flux:modal.trigger name="delete-device">
                                     <flux:menu.item icon="trash" variant="danger">Delete Device</flux:menu.item>
@@ -403,38 +374,6 @@ new class extends Component {
                     </div>
                 </flux:modal>
 
-                <flux:modal name="update-firmware" class="md:w-96">
-                    <div class="space-y-6">
-                        <div>
-                            <flux:heading size="lg">Update Firmware</flux:heading>
-                            <flux:subheading>Select a firmware version to update to</flux:subheading>
-                        </div>
-
-                        <form wire:submit="updateFirmware">
-                            <div class="mb-4">
-                                <flux:select label="Firmware Version" wire:model="selected_firmware_id" required>
-                                    @foreach($firmwares as $firmware)
-                                        <flux:select.option value="{{ $firmware->id }}">
-                                            {{ $firmware->version_tag }} {{ $firmware->latest ? '(Latest)' : '' }}
-                                        </flux:select.option>
-                                    @endforeach
-                                </flux:select>
-                            </div>
-
-                            <div class="mb-4">
-                                <flux:checkbox wire:model="download_firmware" label="Cache Firmware on BYOS">
-                                </flux:checkbox>
-                                <flux:text class="text-xs mt-2">Check if the Device has no internet connection.
-                                </flux:text>
-                            </div>
-
-                            <div class="flex">
-                                <flux:spacer/>
-                                <flux:button type="submit" variant="primary">Update Firmware</flux:button>
-                            </div>
-                        </form>
-                    </div>
-                </flux:modal>
 
                 <flux:modal name="delete-device" class="min-w-[22rem] space-y-6">
                     <div>

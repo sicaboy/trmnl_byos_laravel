@@ -171,17 +171,13 @@ Route::get('/display', function (Request $request) {
         'filename' => $filename,
         'refresh_rate' => $refreshTimeOverride ?? $device->default_refresh_interval,
         'reset_firmware' => false,
-        'update_firmware' => false,// $device->update_firmware,
-        'firmware_url' => '', //$device->firmware_url,
+        'update_firmware' => false,
+        'firmware_url' => '',
         'special_function' => $device->special_function ?? 'sleep',
     ];
 
     if (config('services.trmnl.image_url_timeout')) {
         $response['image_url_timeout'] = config('services.trmnl.image_url_timeout');
-    }
-    // If update_firmware is true, reset it after returning it, to avoid upgrade loop
-    if ($device->update_firmware) {
-        $device->resetUpdateFirmwareFlag();
     }
 
     return response()->json($response);
@@ -451,7 +447,7 @@ Route::get('/current_screen', function (Request $request) {
         'refresh_rate' => $refreshTimeOverride ?? $device->default_refresh_interval,
         'reset_firmware' => false,
         'update_firmware' => false,
-        'firmware_url' => $device->firmware_url,
+        'firmware_url' => '',
         'special_function' => $device->special_function ?? 'sleep',
     ];
 

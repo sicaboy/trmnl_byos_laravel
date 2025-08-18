@@ -38,7 +38,7 @@ test('device can fetch display data with valid credentials', function () {
             'refresh_rate' => 900,
             'reset_firmware' => false,
             'update_firmware' => false,
-            'firmware_url' => null,
+            'firmware_url' => '',
             'special_function' => 'sleep',
         ]);
 
@@ -369,7 +369,7 @@ test('device can mirror another device', function () {
             'refresh_rate' => 900,
             'reset_firmware' => false,
             'update_firmware' => false,
-            'firmware_url' => null,
+            'firmware_url' => '',
             'special_function' => 'sleep',
         ]);
 
@@ -398,7 +398,7 @@ test('device can fetch current screen data', function () {
             'refresh_rate' => 900,
             'reset_firmware' => false,
             'update_firmware' => false,
-            'firmware_url' => null,
+            'firmware_url' => '',
             'special_function' => 'sleep',
         ]);
 });
