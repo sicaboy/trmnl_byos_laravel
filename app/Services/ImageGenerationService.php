@@ -25,12 +25,21 @@ class ImageGenerationService
         $pngPath = Storage::disk('public')->path('/images/generated/'.$uuid.'.png');
         $bmpPath = Storage::disk('public')->path('/images/generated/'.$uuid.'.bmp');
 
+        // Inject Chinese font support CSS into the markup
+        $markup = self::injectChineseFontCSS($markup);
+
         // Generate PNG
         if (config('app.puppeteer_mode') === 'sidecar-aws') {
             try {
                 $browsershot = BrowsershotLambda::html($markup)
                     ->windowSize(800, 480)
-                    ->setOption('args', ['--font-render-hinting=none', '--disable-font-subpixel-positioning']);
+                    ->setOption('args', [
+                        '--font-render-hinting=none',
+                        '--disable-font-subpixel-positioning',
+                        '--force-device-scale-factor=1',
+                        '--disable-extensions',
+                        '--disable-plugins',
+                    ]);
 
                 if (config('app.puppeteer_wait_for_network_idle')) {
                     $browsershot->waitUntilNetworkIdle();
@@ -44,8 +53,23 @@ class ImageGenerationService
         } else {
             try {
                 $args = config('app.puppeteer_docker')
-                    ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--font-render-hinting=none', '--disable-font-subpixel-positioning']
-                    : ['--font-render-hinting=none', '--disable-font-subpixel-positioning'];
+                    ? [
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox',
+                        '--disable-gpu',
+                        '--font-render-hinting=none',
+                        '--disable-font-subpixel-positioning',
+                        '--force-device-scale-factor=1',
+                        '--disable-extensions',
+                        '--disable-plugins',
+                    ]
+                    : [
+                        '--font-render-hinting=none',
+                        '--disable-font-subpixel-positioning',
+                        '--force-device-scale-factor=1',
+                        '--disable-extensions',
+                        '--disable-plugins',
+                    ];
 
                 $browsershot = Browsershot::html($markup)
                     ->setOption('args', $args)
@@ -176,5 +200,41 @@ class ImageGenerationService
                 Log::debug('Skip cache as devices with other dimensions exist');
             }
         }
+    }
+
+    /**
+     * Inject CSS for better Chinese font support
+     */
+    private static function injectChineseFontCSS(string $markup): string
+    {
+        $chineseFontCSS = '
+        <style>
+        /* Enhanced Chinese font support */
+        * {
+            font-family: "Inter", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "SimHei", "DejaVu Sans", "Liberation Sans", sans-serif !important;
+        }
+        
+        /* Specific Chinese character rendering improvements */
+        body, html {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Ensure Chinese characters have proper line height */
+        .lunar-date, .calendar-title, .lunar-year, .calendar-day-header {
+            font-family: "Noto Sans CJK SC", "Source Han Sans", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "SimHei", "DejaVu Sans", "Liberation Sans", monospace, serif !important;
+        }
+        </style>';
+
+        // Insert the CSS just before the closing </head> tag
+        if (mb_strpos($markup, '</head>') !== false) {
+            $markup = str_replace('</head>', $chineseFontCSS.'</head>', $markup);
+        } else {
+            // If no </head> tag found, prepend to the markup
+            $markup = $chineseFontCSS.$markup;
+        }
+
+        return $markup;
     }
 }

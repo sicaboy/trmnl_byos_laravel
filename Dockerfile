@@ -15,6 +15,13 @@ ENV AUTORUN_ENABLED="true"
 # Switch to the root user so we can do root things
 USER root
 
+# Install Chinese fonts for better UTF-8 support
+RUN apk add --no-cache \
+    ttf-dejavu \
+    ttf-liberation \
+    ttf-linux-libertine \
+    font-noto-cjk
+
 # Set the working directory
 WORKDIR /var/www/html
 
