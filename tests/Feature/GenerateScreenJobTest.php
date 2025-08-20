@@ -56,3 +56,21 @@ test('it preserves gitignore file during cleanup', function () {
 
     Storage::disk('public')->assertExists('/images/generated/.gitignore');
 })->skipOnGitHubActions();
+
+test('it generates images with Chinese text', function () {
+    $device = Device::factory()->create();
+    $chineseMarkup = view('trmnl-layouts.single', [
+        'slot' => '<div style="font-size: 24px; font-family: serif;">你好世界 Chinese Text</div>'
+    ])->render();
+    
+    $job = new GenerateScreenJob($device->id, null, $chineseMarkup);
+    $job->handle();
+
+    // Assert the device was updated with a new image UUID
+    $device->refresh();
+    expect($device->current_screen_image)->not->toBeNull();
+
+    // Assert PNG file was created (Chinese text support verification)
+    $uuid = $device->current_screen_image;
+    Storage::disk('public')->assertExists("/images/generated/{$uuid}.png");
+})->skipOnGitHubActions();

@@ -29,7 +29,8 @@ class ImageGenerationService
         if (config('app.puppeteer_mode') === 'sidecar-aws') {
             try {
                 $browsershot = BrowsershotLambda::html($markup)
-                    ->windowSize(800, 480);
+                    ->windowSize(800, 480)
+                    ->setOption('args', ['--font-render-hinting=none', '--disable-font-subpixel-positioning']);
 
                 if (config('app.puppeteer_wait_for_network_idle')) {
                     $browsershot->waitUntilNetworkIdle();
@@ -42,8 +43,12 @@ class ImageGenerationService
             }
         } else {
             try {
+                $args = config('app.puppeteer_docker')
+                    ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--font-render-hinting=none', '--disable-font-subpixel-positioning']
+                    : ['--font-render-hinting=none', '--disable-font-subpixel-positioning'];
+
                 $browsershot = Browsershot::html($markup)
-                    ->setOption('args', config('app.puppeteer_docker') ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'] : [])
+                    ->setOption('args', $args)
                     ->windowSize(800, 480);
 
                 if (config('app.puppeteer_wait_for_network_idle')) {
