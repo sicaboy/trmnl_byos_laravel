@@ -1,7 +1,7 @@
 ########################
 # Base Image
 ########################
-FROM bnussbau/serversideup-php:8.3-fpm-nginx-alpine-imagick-chromium AS base
+FROM serversideup/php:8.3-fpm-nginx-alpine@sha256:e68187a9528acae5e9002149496fa118a4ca6f96261f8c60ac8fbfb58147f752 AS base
 
 LABEL org.opencontainers.image.source=https://github.com/usetrmnl/byos_laravel
 LABEL org.opencontainers.image.description="Smart Display"
@@ -18,8 +18,12 @@ USER root
 ENV PHP_MEMORY_LIMIT=-1
 COPY docker/php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini
 
+RUN install-php-extensions imagick
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
 # Install Chinese fonts for better UTF-8 support
-RUN apk add --no-cache \
+RUN apk add --no-cache chromium \
     ttf-dejavu \
     ttf-liberation \
     ttf-linux-libertine \
