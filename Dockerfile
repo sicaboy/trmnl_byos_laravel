@@ -15,6 +15,9 @@ ENV AUTORUN_ENABLED="true"
 # Switch to the root user so we can do root things
 USER root
 
+ENV PHP_MEMORY_LIMIT=-1
+COPY docker/php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini
+
 # Install Chinese fonts for better UTF-8 support
 RUN apk add --no-cache \
     ttf-dejavu \

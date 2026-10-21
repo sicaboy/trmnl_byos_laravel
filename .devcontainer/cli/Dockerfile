@@ -34,3 +34,5 @@ RUN ln -s /usr/local/bin/php /usr/bin/php83
 RUN apk add --no-cache nodejs npm
 # Prevent container from exiting early.
 CMD ["sleep", "infinity"]
+
+COPY php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini

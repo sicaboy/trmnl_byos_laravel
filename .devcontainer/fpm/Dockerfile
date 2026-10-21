@@ -28,3 +28,5 @@ RUN docker-php-ext-install imagick
 
 RUN rm -f /usr/bin/php83
 RUN ln -s /usr/local/bin/php /usr/bin/php83
+
+COPY php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini
