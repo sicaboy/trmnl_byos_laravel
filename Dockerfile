@@ -24,7 +24,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Install Chinese fonts for better UTF-8 support
-RUN apk add --no-cache chromium \
+RUN apk add --no-cache chromium nodejs npm \
     ttf-dejavu \
     ttf-liberation \
     ttf-linux-libertine \
