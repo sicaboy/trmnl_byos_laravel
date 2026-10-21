@@ -11,6 +11,7 @@ ARG APP_VERSION
 ENV APP_VERSION=${APP_VERSION}
 
 ENV AUTORUN_ENABLED="true"
+ENV AUTORUN_LARAVEL_MIGRATION="false"
 
 # Switch to the root user so we can do root things
 USER root
@@ -19,7 +20,7 @@ ENV PHP_MEMORY_LIMIT=-1
 COPY docker/php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini
 
 RUN install-php-extensions imagick
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Install Chinese fonts for better UTF-8 support
@@ -62,6 +63,8 @@ FROM base AS production
 # Copy the assets from the assets image
 COPY --chown=www-data:www-data --from=assets /app/public/build /var/www/html/public/build
 COPY --chown=www-data:www-data --from=assets /app/node_modules /var/www/html/node_modules
+
+COPY docker/rootfs/ /
 
 # Drop back to the www-data user
 USER www-data
