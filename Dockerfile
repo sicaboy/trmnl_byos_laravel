@@ -22,6 +22,7 @@ COPY docker/php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini
 RUN install-php-extensions imagick
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_DOCKER=1
 
 # Install Chinese fonts for better UTF-8 support
 RUN apk add --no-cache chromium nodejs npm \
