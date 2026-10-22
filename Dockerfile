@@ -1,7 +1,7 @@
 ########################
 # Base Image
 ########################
-FROM bnussbau/serversideup-php:8.3-fpm-nginx-alpine-imagick-chromium AS base
+FROM serversideup/php:8.3-fpm-nginx-alpine@sha256:e68187a9528acae5e9002149496fa118a4ca6f96261f8c60ac8fbfb58147f752 AS base
 
 LABEL org.opencontainers.image.source=https://github.com/usetrmnl/byos_laravel
 LABEL org.opencontainers.image.description="Smart Display"
@@ -11,6 +11,7 @@ ARG APP_VERSION
 ENV APP_VERSION=${APP_VERSION}
 
 ENV AUTORUN_ENABLED="true"
+ENV AUTORUN_LARAVEL_MIGRATION="false"
 
 # Switch to the root user so we can do root things
 USER root
@@ -18,8 +19,13 @@ USER root
 ENV PHP_MEMORY_LIMIT=-1
 COPY docker/php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini
 
+RUN install-php-extensions imagick
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_DOCKER=1
+
 # Install Chinese fonts for better UTF-8 support
-RUN apk add --no-cache \
+RUN apk add --no-cache chromium nodejs npm \
     ttf-dejavu \
     ttf-liberation \
     ttf-linux-libertine \
@@ -58,6 +64,8 @@ FROM base AS production
 # Copy the assets from the assets image
 COPY --chown=www-data:www-data --from=assets /app/public/build /var/www/html/public/build
 COPY --chown=www-data:www-data --from=assets /app/node_modules /var/www/html/node_modules
+
+COPY docker/rootfs/ /
 
 # Drop back to the www-data user
 USER www-data
