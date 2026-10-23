@@ -16,6 +16,11 @@ ENV AUTORUN_LARAVEL_MIGRATION="false"
 # Switch to the root user so we can do root things
 USER root
 
+# Require the official Nginx package security revision in future builds.
+RUN apk add --no-cache --upgrade --repository https://nginx.org/packages/alpine/v3.24/main \
+    'nginx>=1.30.6-r1'
+
+
 ENV PHP_MEMORY_LIMIT=-1
 COPY docker/php.ini /usr/local/etc/php/conf.d/zz-runtime-policy.ini
 
