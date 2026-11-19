@@ -18,7 +18,7 @@ USER root
 
 # Require the official Nginx package security revision in future builds.
 RUN apk add --no-cache --upgrade --repository https://nginx.org/packages/alpine/v3.24/main \
-    'nginx>=1.30.6-r1'
+    'nginx>=1.30.7-r1'
 
 
 ENV PHP_MEMORY_LIMIT=-1
