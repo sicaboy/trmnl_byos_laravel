@@ -18,7 +18,10 @@ USER root
 
 # Require the official Nginx package security revision in future builds.
 RUN apk add --no-cache --upgrade --repository https://nginx.org/packages/alpine/v3.24/main \
-    'nginx>=1.30.7-r1'
+    'nginx>=1.30.7-r1' \
+    # The nginx.org package ships its own nginx.conf and a port-80 default site;
+    # remove them so serversideup renders its config from nginx.conf.template.
+    && rm -f /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 
 ENV PHP_MEMORY_LIMIT=-1
